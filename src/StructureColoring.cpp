@@ -73,6 +73,7 @@ void StructureColoring::init(ros::NodeHandle& n, int argc, char* argv[])
 	init(argc, argv);
 	initNode(n);
 	mVis = new RosVisualization(n);
+	structurePublisher = new StructurePublisher(n);
     if (mParams.mVerbose)
     {
         ROS_INFO("Verbose output enabled");
@@ -113,6 +114,7 @@ void StructureColoring::init()
 StructureColoring::~StructureColoring()
 {
 	if(mVis) delete mVis;
+	if(structurePublisher) delete structurePublisher;
 }
 
 /*****************************************************************************/
@@ -270,15 +272,19 @@ void StructureColoring::pointCloud2Callback(const sensor_msgs::PointCloud2ConstP
 	if (mVis)
 	{
 	    mVis->setFrame(msg->header.frame_id);
+	    //FIXME: why is the frame_id wrong?
 	    mVis->setFrame("/skycam_kinect_rgb_link");
-//	    pcl::PointXYZ
-	    std::cout << "fields: ";
-	    for (std::vector<sensor_msgs::PointField>::const_iterator fields_it = msg->fields.begin(); fields_it != msg->fields.end(); fields_it++)
-	    {
-	        std::cout << fields_it->name << "(" << fields_it->count << ")" << " ";
-	    }
-	    std::cout << std::endl;
 	}
+    if (structurePublisher)
+    {
+        structurePublisher->setFrame("/skycam_kinect_rgb_link");
+//        std::cout << "fields: ";
+//        for (std::vector<sensor_msgs::PointField>::const_iterator fields_it = msg->fields.begin(); fields_it != msg->fields.end(); fields_it++)
+//        {
+//            std::cout << fields_it->name << "(" << fields_it->count << ")" << " ";
+//        }
+//        std::cout << std::endl;
+    }
 	//get input from rosMsg
 	filterMsgSetupCloud(*pointCloud, msg, -mParams.mRho_max, mParams.mRho_max, mParams.mKinect, mParams.mWriteRawPic, mParams.mRawPicFilename, mParams.mRawPicCounter++);
 
@@ -536,6 +542,10 @@ void StructureColoring::callPublisher(const OcTree& octree, PlanePatches& extrac
 			mVis->publishCylinderMarker(extractedCylinders);
 			mVis->publishCylinderPoints(extractedCylinders, pointCloud);
 		}
+	}
+	if (structurePublisher)
+	{
+	    structurePublisher->publishSegmentedPointcloud(pointMapping, extractedPlanes, *pointCloud);
 	}
 }
 

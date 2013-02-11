@@ -57,6 +57,7 @@
 #include <omp.h>
 #include <Eigen/Dense>
 #include <Eigen/StdVector>
+#include <structureColoring/StructurePublisher.h>
 
 // forward declarations:
 class RosVisualization;
@@ -493,6 +494,7 @@ protected:
 	OcTreePtr mOcTree;
 
 	RosVisualization* mVis;
+	StructurePublisher* structurePublisher;
 
 	SphereBinsVec mPointNeighborBins;
 
