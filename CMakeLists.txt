@@ -79,6 +79,8 @@ set( common_sources
   src/StrColParams.cpp
   src/RosVisualization.cpp
   src/StructureColoring.cpp
+
+  src/StructurePublisher.cpp
 )
 
 ##############################################################################

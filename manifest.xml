@@ -13,10 +13,11 @@
   <depend package="opencv2" />
   <depend package="visualization_msgs" />
   <depend package="octreelib" />
+  <!--rosdep name="octreelib" /-->
 
   <rosdep name="qt4"/>
   <rosdep name="openmp"/>
-  <!--rosdep name="eigen"/-->
+  <rosdep name="eigen"/>
   <rosdep name="opencv2"/>
 
   <export>

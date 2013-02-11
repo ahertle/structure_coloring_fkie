@@ -37,8 +37,8 @@
 #define OCTREE_H_
 
 #include <boost/shared_ptr.hpp>
-#include <octreelib/spatialaggregate/octree.h>
 #include <octreelib/algorithm/downsample.h>
+#include <octreelib/spatialaggregate/octree.h>
 #include "NormalEstimationValueClass.h"
 #include <list>
 #include <vector>

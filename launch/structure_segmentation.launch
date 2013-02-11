@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<launch>
+  
+  <node name="structure_segmentation_node" pkg="structure_coloring" type="segmentSC" args="--kinectt /skycam_kinect/depth_registered/points" respawn="false" output="screen">
+    <remap from="/openni_rgb_optical_frame" to="/skycam_rgb_optical_frame" />
+  </node>
+
+</launch>
